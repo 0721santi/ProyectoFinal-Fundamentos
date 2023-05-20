@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Random;
 import java.io.*;
 public class main{
     static void creaArrayPalabras(String path, ArrayList<String> lista){
@@ -13,7 +14,7 @@ public class main{
             System.out.println("No existe un archivo con nombre "+path+".");
         }
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner myScan = new Scanner(System.in);
         System.out.print("Ingrese nombre del archivo: ");
         String path = myScan.nextLine();
