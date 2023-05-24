@@ -1,18 +1,18 @@
 public class Palabra {
     // atributos
-    private int x, y, longigtude, direccion;
+    private int x, y, longitude, direccion;
     private String name;
     // constructor
-    Palabra(int longigtude, String name){
+    Palabra(int longitude, String name){
         this.name = name;
-        this.longigtude = longigtude;
+        this.longitude = longitude;
     }
     // getters
     public String getName(){
         return this.name;
     }
     public int getLongitude(){
-        return this.longigtude;
+        return this.longitude;
     }
     public int getXpos(){
         return this.x;
@@ -27,8 +27,8 @@ public class Palabra {
     public void setDireccion(int direccion){
         this.direccion = direccion;
     }
-    public void setLongitude(int longigtude){
-        this.longigtude = longigtude;
+    public void setLongitude(int longitude){
+        this.longitude = longitude;
     }
     public void setName(String name){
         this.name = name;
