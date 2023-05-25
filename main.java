@@ -33,9 +33,9 @@ public class main{
         }
     }
     // este metodo tiene como funcion llenar el arreglo con las palabras que habian en el archivo .txt
-    static void llenarClase(Palabra p[], ArrayList<String> lista){
+    static void llenarClase(Palabras p[], ArrayList<String> lista){
         for(int i=0;i<lista.size();i++){
-            p[i] = new Palabra(lista.get(i).length(), lista.get(i));
+            p[i] = new Palabras(lista.get(i).length(), lista.get(i));
             System.out.println(lista.get(i));
         }
     }
@@ -48,7 +48,7 @@ public class main{
         creaArrayPalabras(path, listaPalabras);
         organizaLista(listaPalabras);
         // Se instancia la clase "Palabra" y se crean los objetos.
-        Palabra p[] = new Palabra[listaPalabras.size()];
+        Palabras p[] = new Palabras[listaPalabras.size()];
         llenarClase(p, listaPalabras);
         int maxlong = p[0].getLongitude();
         //crear la sopa de letras
