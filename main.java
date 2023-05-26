@@ -1,55 +1,25 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
-import java.io.*; // se importan todas las libreria del paquete .io (input output)
 public class main{
-    // se crea un metodo para buscar el archivo .txt para llenar el arreglo
-    // se busco en: (url) para lograr realizar la busqueda de un archivo
-    static void creaArrayPalabras(String path, ArrayList<String> lista){
-        // se usa un try - catch para evitar que salga un error tipo java exception como out bound 
-        try {
-            File doc = new File(path+".txt");
-            Scanner readDoc = new Scanner(doc);       
-            while(readDoc.hasNextLine()){
-                lista.add(readDoc.nextLine());
-            }
-        } catch (Exception e) {
-            System.out.println("No existe un archivo con nombre "+path+".");
-        }
-    }
-    // se usa otro metodo para organizar el arreglo de mayor a menor
-    static void organizaLista(ArrayList<String> lista){
-        int n = lista.size();
-        for(int i = 0;i<n-1;i++){
-            int maxIndex = i;
-            for(int j = i;j<n;j++){
-                if(lista.get(j).length() > lista.get(maxIndex).length()){
-                    maxIndex = j;
-                }
-            }
-            String temp = lista.get(maxIndex);
-            lista.set(maxIndex, lista.get(i));
-            lista.set(i, temp);
-        }
-    }
     // este metodo tiene como funcion llenar el arreglo con las palabras que habian en el archivo .txt
-    static void llenarClase(Palabras p[], ArrayList<String> lista){
-        for(int i=0;i<lista.size();i++){
-            p[i] = new Palabras(lista.get(i).length(), lista.get(i));
-            System.out.println(lista.get(i));
-        }
-    }
+    // static void llenarClase(Palabras p[], ArrayList<String> lista){
+    //     for(int i=0;i<lista.size();i++){
+    //         p[i] = new Palabras(lista.get(i).length(), lista.get(i));
+    //         System.out.println(lista.get(i));
+    //     }
+    // }
     public static void main(String[] args) {
         Scanner myScan = new Scanner(System.in);
         System.out.print("Ingrese nombre del archivo: ");
         String path = myScan.nextLine();
         // Se crea y se organiza el arrayList
         ArrayList<String> listaPalabras = new ArrayList<>();
-        creaArrayPalabras(path, listaPalabras);
-        organizaLista(listaPalabras);
+        MainSopaLetras.creaArrayPalabras(path, listaPalabras);
+        MainSopaLetras.organizaLista(listaPalabras);
         // Se instancia la clase "Palabra" y se crean los objetos.
         Palabras p[] = new Palabras[listaPalabras.size()];
-        llenarClase(p, listaPalabras);
+        //llenarClase(p, listaPalabras);
         int maxlong = p[0].getLongitude();
         //crear la sopa de letras
         Random myRandPos = new Random();
