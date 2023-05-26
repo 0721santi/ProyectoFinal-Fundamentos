@@ -1,8 +1,8 @@
 public class Palabras {
     // atributos
-    private int longitude;
-    private String name;
-    private int estado;
+    protected int longitude;
+    protected String name;
+    protected int estado;
     // constructor
     Palabras(int longitude, String name, int estado){
         this.name = name;
