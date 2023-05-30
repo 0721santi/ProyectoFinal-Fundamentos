@@ -1,13 +1,12 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.*; // se importan todas las libreria del paquete .io (input output)
-//matriz[y][x]
-// utilizar herencia imprimendo una clase ImprimirSopa sin resolver y utiulizar extends en otra clase ImprimirSopaResuelta que imprima la sopa la imprima resuelta (IDEA PARA HERENCIA)
+import java.io.*; // se importan todas las libreria del paquete .io (input output).
+import java.nio.file.Paths;
 public class MainSopaLetras {
     // se crea un metodo para buscar el archivo .txt para llenar el arreglo
     static void creaArrayPalabras(String path, ArrayList<String> lista){
-        //se usa un try - catch para evitar que salga un error tipo java exception como out bound 
+        //se usa un try - catch para evitar que salga un error tipo java exception como out of bounds
         try {
             File doc = new File(path+".txt");
             Scanner readDoc = new Scanner(doc);       
@@ -33,7 +32,11 @@ public class MainSopaLetras {
             lista.set(i, temp);
         }
     }
-    static char[][] creaSopaDeLetras(ArrayList<String> lista, int tamanoSopa){
+    static char[][] creaSopaDeLetras(ArrayList<String> lista, int tamanoSopa, Palabra[] p){
+        /* Se crea un método para crear el trablero de la sopa de letras y se escoge la direccion que tendra cada palabra
+        *  de manera aleatorio y con un switch, en caso de que el numero aletario sea 0 la direccion será vertical e invertido
+        *  el 1 será vertical no invertido y asi sucesivamente.
+        */
         Random myRand = new Random();
         char[][] sopa = new char[tamanoSopa][tamanoSopa];
         for(int i = 0;i<lista.size();i++){
@@ -41,34 +44,34 @@ public class MainSopaLetras {
             int lon = lista.get(i).length();
             switch(direccion){
                 case 0:
-                    creaVerticales(lista, sopa, tamanoSopa, lon, direccion, i);
+                    creaVerticales(lista, sopa, tamanoSopa, lon, direccion, i, p);
                     break;
                 case 1:
-                    creaVerticales(lista, sopa, tamanoSopa, lon, direccion, i);
+                    creaVerticales(lista, sopa, tamanoSopa, lon, direccion, i, p);
                     break;                    
                 case 2:
-                    creaHorizontales(lista, sopa, tamanoSopa, lon, direccion, i);
+                    creaHorizontales(lista, sopa, tamanoSopa, lon, direccion, i, p);
                     break;
                 case 3:
-                    creaHorizontales(lista, sopa, tamanoSopa, lon, direccion, i);
+                    creaHorizontales(lista, sopa, tamanoSopa, lon, direccion, i, p);
                     break;
                 case 4:
-                    if(!creaDiagonales(lista, sopa, tamanoSopa, lon, direccion, i)){
+                    if(!creaDiagonales(lista, sopa, tamanoSopa, lon, direccion, i, p)){
                         i--;
                     }
                     break;
                 case 5:
-                    if(!creaDiagonales(lista, sopa, tamanoSopa, lon, direccion, i)){
+                    if(!creaDiagonales(lista, sopa, tamanoSopa, lon, direccion, i, p)){
                         i--;
                     }
                     break;
                 case 6:
-                    if(!creaDiagonales(lista, sopa, tamanoSopa, lon, direccion, i)){
+                    if(!creaDiagonales(lista, sopa, tamanoSopa, lon, direccion, i, p)){
                         i--;
                     }
                     break;
                 case 7:
-                    if(!creaDiagonales(lista, sopa, tamanoSopa, lon, direccion, i)){
+                    if(!creaDiagonales(lista, sopa, tamanoSopa, lon, direccion, i, p)){
                         i--;
                     }
                     break;
@@ -76,7 +79,7 @@ public class MainSopaLetras {
         }
         return sopa;
     }
-    static void creaVerticales(ArrayList<String> lista, char[][] sopa, int tamanoSopa, int lon, int dir, int i){
+    static void creaVerticales(ArrayList<String> lista, char[][] sopa, int tamanoSopa, int lon, int dir, int i, Palabra[] p){
         /*
          * Este método permite decidir si una palabra se crea en sentido invertido o no.
          * Además, llena la matriz de chars con los chars de la palabra en cuestión de manera vertical.
@@ -99,6 +102,7 @@ public class MainSopaLetras {
             for(int j=x;j<lon+x;j++){
                 sopa[y][j] = lista.get(i).charAt(j-x);
             }
+            creaPalabra(lista, p, dir, i, x, y);
         }
         else{
             int x = lon + myRand.nextInt(tamanoSopa-lon);
@@ -109,17 +113,18 @@ public class MainSopaLetras {
                     y = myRand.nextInt(tamanoSopa);
                     j = x+1;
                     /*
-                    * Es x+1, porque cuando vuelve al control del for, j--, entonces tendria uno menos y no seria 
-                    realmente 0.
+                    * Es x+1, porque cuando vuelve al control del for, j--, entonces tendria uno menos y no
+                    seria realmente 0.
                     */
                 }
             }
             for(int j=x;j>(x-lon);j--){
                 sopa[y][j] = lista.get(i).charAt(x-j);
             }
+            creaPalabra(lista, p, dir, i, x, y);
         }
     }
-    static void creaHorizontales(ArrayList<String> lista, char[][] sopa, int tamanoSopa, int lon, int dir, int i){
+    static void creaHorizontales(ArrayList<String> lista, char[][] sopa, int tamanoSopa, int lon, int dir, int i, Palabra[] p){
         /*
          * Este método permite decidir si una palabra se crea en sentido invertido o no.
          * Además, llena la matriz de chars con los chars de la palabra en cuestión de manera vertical.
@@ -143,6 +148,7 @@ public class MainSopaLetras {
             for(int j=y;j<lon+y;j++){
                 sopa[j][x] = lista.get(i).charAt(j-y);
             }
+            creaPalabra(lista, p, dir, i, x, y);
         }
         else{
             int x = myRand.nextInt(tamanoSopa);
@@ -160,9 +166,10 @@ public class MainSopaLetras {
             for(int j = y;j>(y-lon);j--){
                 sopa[j][x] = lista.get(i).charAt(y-j);
             }
+            creaPalabra(lista, p, dir, i, x, y);
         }
     }
-    static boolean creaDiagonales(ArrayList<String> lista, char[][] sopa, int tamanoSopa, int lon, int dir, int i){
+    static boolean creaDiagonales(ArrayList<String> lista, char[][] sopa, int tamanoSopa, int lon, int dir, int i, Palabra[] word){
         /*
          * Este método permite decidir si una palabra se crea en sentido invertido o no.
          * Además, llena la matriz de chars con los chars de la palabra en diagonal.
@@ -198,6 +205,7 @@ public class MainSopaLetras {
                 for(int j = p;j<lon+p;j++){
                     sopa[j][j] = lista.get(i).charAt(j-p);
                 }
+                creaPalabra(lista, word, dir, i, p, p);
                 return true;
             case 5:
                 int px = lon + myRand.nextInt(tamanoSopa-lon);
@@ -223,6 +231,7 @@ public class MainSopaLetras {
                 for(int j = px, k = py;j>(px-lon);j--, k++){
                     sopa[k][j] = lista.get(i).charAt(k-py);
                 }
+                creaPalabra(lista, word, dir, i, px, py);
                 return true;
             case 6:
                 p = lon + myRand.nextInt(tamanoSopa-lon);
@@ -243,12 +252,13 @@ public class MainSopaLetras {
                     }
                 }
                 /* se crea una variable intentos para verificar 3 veces si hay espacio para la palabra, de lo 
-                contrario se cambia de direccion,
+                *  contrario se cambia de direccion,
                 *  para que no quede en un loop infinito buscando en las mismas cordenadas.
                 */
                 for(int j = p;j>(p-lon);j--){
                     sopa[j][j] = lista.get(i).charAt(p-j);
                 }
+                creaPalabra(lista, word, dir, i, p, p);
                 return true;
             case 7:
                 py = lon + myRand.nextInt(tamanoSopa-lon);
@@ -277,23 +287,55 @@ public class MainSopaLetras {
                 for(int j = py, k = px;j>(py-lon);j--, k++){
                         sopa[j][k] = lista.get(i).charAt(k-px);
                 }
+                creaPalabra(lista, word, dir, i, px, py);
                 return true;
             default:
                 return false;
         }
     }
     static void llenaVacios(char[][] sopa, int tamanoSopa){
+        // Se crea un  método para llenar los espacios restantes luego de poner todas las palabras en la sopa de letras.
         Random genChar = new Random();
         for (int i = 0; i < tamanoSopa; i++){
             for(int j = 0; j<tamanoSopa;j++){
                 if(sopa[i][j] == '\0'){
-                    sopa[i][j] = (char)(genChar.nextInt(26) + 'A');
+                    sopa[i][j] = (char)(genChar.nextInt(26) + 'a');
                     /*
                      * Esta forma de generar chars fue tomada de stackoverflow:
                      * https://stackoverflow.com/questions/2626835/is-there-functionality-to-generate-a-random-character-in-java
                      */
                 }
             }
+        }
+    }
+    static void creaPalabra(ArrayList<String> lista, Palabra[] p, int dir, int i, int x, int y){
+        /* Se crea un método para crar un objeto palabra, que nos servira para imprimir las palabras 
+        *  que se colocaron en la sopa y para obtener sus diferentes atributos.
+        */
+        p[i] = new Palabra(lista.get(i), x, y, dir, false);
+    }
+    static void guardaSopa(char[][] sopa, int tamanoSopa){
+        /*
+         * Se crea método para guardar la sopa de letras en un txt.
+         * Se usó información de:
+         * https://www.geeksforgeeks.org/java-program-to-save-a-string-to-a-file/
+         * https://stackoverflow.com/questions/17716192/insert-line-break-when-writing-to-file
+         */
+        Scanner myScan = new Scanner(System.in);
+        System.out.println("¿Que nombre quiere poner?");
+        String name = myScan.nextLine();
+        try{
+            FileWriter crea = new FileWriter(name+".txt");
+            for(int i=0;i<tamanoSopa;i++){
+                for(int j=0;j<tamanoSopa;j++){
+                    crea.write(sopa[i][j]);
+                }
+                crea.write("\n");
+            }
+            crea.close();
+        }
+        catch(Exception e){
+            System.out.println(name+" no es un nombre de archivo válido.");
         }
     }
 }

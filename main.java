@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Random;
 public class main{
     public static void main(String[] args) {
         Scanner myScan = new Scanner(System.in);
@@ -13,7 +12,7 @@ public class main{
         // Se instancia la clase "Palabra" y se crean los objetos.
         Palabra p[] = new Palabra[listaPalabras.size()];
         int tamanoSopa = listaPalabras.get(0).length() * 2;
-        char[][] sopa = MainSopaLetras.creaSopaDeLetras(listaPalabras, tamanoSopa);
+        char[][] sopa = MainSopaLetras.creaSopaDeLetras(listaPalabras, tamanoSopa, p);
         MainSopaLetras.llenaVacios(sopa, tamanoSopa);
         for(int i = 0;i<tamanoSopa;i++){
             for(int j = 0;j<tamanoSopa;j++){
@@ -21,5 +20,6 @@ public class main{
             }
             System.out.println(" ");
         }
+        MainSopaLetras.guardaSopa(sopa, tamanoSopa);
     }
 }
