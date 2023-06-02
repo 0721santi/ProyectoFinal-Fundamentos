@@ -11,6 +11,7 @@ public class main{
         Palabra[] p = new Palabra[listaPalabras.size()];
         int tamanoSopa = 0, opc;
         char[][] sopa = new char[tamanoSopa][tamanoSopa];
+        int[] pasos;
         boolean check = false;
         while(true){
             opc = MainSopaLetras.getMenu();
@@ -35,18 +36,20 @@ public class main{
                         System.out.println("No puedes usar esta opción sin haber leido y creado una sopa de letras.");
                         continue;
                     }
-                    int[] pasos = solve.solucionSopa();
-                    for(int i = 0;i<sopa.length;i++){
-                        for(int j=0;j<sopa[0].length;j++){
-                            System.out.print(sopa[i][j]+" ");
-                        }
-                        System.out.println(" ");
-                    }
+                    pasos = solve.solucionSopa();
+                    solve.imprimeSopa();
                     solve.imprimePosiciones(p);
                     System.out.println("La sopa se resolvió en: "+pasos[0]+" pasos."); 
                     break;
                 case 3:
-                    
+                    System.out.print("Ingrese el nombre del archivo con la sopa de letras: ");
+                    String pathSopa = myScan.nextLine();
+                    System.out.print("Ingrese el nombre del archivo con la lista de palabras a encontrar: ");
+                    String pathLista = myScan.nextLine();
+                    Solucion2 soluciona = new Solucion2(pathSopa, pathLista);
+                    soluciona.imprimeSopa();
+                    pasos = soluciona.solucionSopa();
+                    System.out.println("La sopa se resolvió en: "+pasos[0]+" pasos.");
                     break;
             }
         }

@@ -31,16 +31,17 @@ public class Solucion1 implements MetodosSolucion{
             }
         } catch (Exception e) {
             System.out.println("No existe un archivo con nombre "+path+".");
+            System.out.println("Ejecute nuevamente el programa.");
+            System.exit(0);
         }
         return lista;
     }
     public int[] solucionSopa(){
         int[] pasos = {0};
         for(int p = 0;p<palabras.length;p++){
-            boolean[][] visited = new boolean[sopa.length][sopa[0].length];
-            // System.out.println(sopa.length);
+            boolean[][] visited = new boolean[sopa.length][sopa.length];
             for (int i = 0; i < sopa.length; i++) {
-                for (int j = 0; j < sopa[i].length; j++) {
+                for (int j = 0; j < sopa.length; j++) {
                     searchMethod(sopa, palabras, p, visited, i, j, 0, pasos);
                 }
             }
@@ -53,20 +54,24 @@ public class Solucion1 implements MetodosSolucion{
         * chatGPT luego de preguntarle por diferentes metodos para resolver una sopa de letras arrojo varias estrategias y finalmente la que mejor se acoplo a nuestro proyecto
         * fue el DFS (búsqueda en profundidad) ya que era un codigo corto, fácil de comprender y eficiente.
         */
-        if (index == palabra[p].getWordLongitude()){
+        if (index == palabra[p].getWordLongitude()-1){
             palabra[p].setEstado(true);
             palabra[p].setX2(y);
             palabra[p].setY2(x);
             return true;
         }
-        if ((x < 0 || x >= sopa.length) || (y < 0 || y >= sopa[x].length) || visited[x][y] || (sopa[x][y] != palabra[p].getName().charAt(index))){
+        if ((x < 0 || x >= sopa.length) || (y < 0 || y >= sopa.length) || visited[x][y] || (sopa[x][y] != palabra[p].getName().charAt(index))){
             return false;
         }
         visited[x][y] = true;
         for (int i = 0; i < 8; i++){
+            int newX = x + dx[i];
+            int newY = y + dy[i];
             pasos[0]++;
-            if (searchMethod(sopa, palabra, p, visited, x + dx[i], y + dy[i], index + 1, pasos)) {
-                return true;
+            if ((newX >= 0 && newX < sopa.length) && (newY >= 0 && newY < sopa.length) && sopa[newX][newY] == palabra[p].getName().charAt   (index + 1)) {
+                if (searchMethod(sopa, palabra, p, visited, newX, newY, index + 1, pasos)) {
+                    return true;
+                }
             }
         }
         visited[x][y] = false;
@@ -79,6 +84,14 @@ public class Solucion1 implements MetodosSolucion{
         */
         for(int i=0;i<p.length;i++){
             System.out.println("Palabra: "+p[i].getName()+". -> X1, Y1: ("+p[i].getX1()+" "+p[i].getY1()+"), X2,Y2: ("+p[i].getX2()+" "+p[i].getY2()+").");
+        }
+    }
+    public void imprimeSopa(){
+        for(int i = 0;i<sopa.length;i++){
+            for(int j=0;j<sopa.length;j++){
+                System.out.print(sopa[i][j]+" ");
+            }
+            System.out.println(" ");
         }
     }
 }

@@ -24,6 +24,8 @@ public class MainSopaLetras{
             }
         } catch (Exception e) {
             System.out.println("No existe un archivo con nombre "+path+".");
+            System.out.println("Ejecute nuevamente el programa.");
+            System.exit(0);
         }
     }
     static void guardaArchivo(char[][] sopa, int tamanoSopa){
