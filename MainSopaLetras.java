@@ -1,9 +1,11 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.*; // se importan todas las libreria del paquete .io (input output).
+// se importan todas las libreria del paquete .io (input output).
+import java.io.*; 
 public class MainSopaLetras{
     static int getMenu(){
+        // Se crea el método para crear el menu, que se instancia en el main por medio de un switch.
         Scanner myScan = new Scanner(System.in);
         System.out.println("MENU");
         System.out.println("1. Crear sopa de letras a partir de archivo .txt");
@@ -14,8 +16,10 @@ public class MainSopaLetras{
         return opc;
     }
     static void lecturaArchivo(String path, ArrayList<String> lista){
-        // se crea un metodo para buscar y leer el archivo .txt para llenar el ArrayList de palabras.
-        //se usa un try - catch para evitar que salga un error tipo java exception como out of bounds
+        /* 
+        * Se crea un metodo para buscar y leer el archivo .txt para llenar el ArrayList de palabras.
+        * Se usa un try - catch para evitar que salga un error tipo java exception como out of bounds.
+        */
         try {
             File doc = new File(path+".txt");
             Scanner readDoc = new Scanner(doc);       
@@ -30,8 +34,7 @@ public class MainSopaLetras{
     }
     static void guardaArchivo(char[][] sopa, int tamanoSopa){
         /*
-         * Se crea método para guardar la sopa de letras en un txt.
-         * Se usó información de:
+         * Se crea método para guardar la sopa de letras en un txt usando FileWriter. Se usó información de:
          * https://www.geeksforgeeks.org/java-program-to-save-a-string-to-a-file/
          * https://stackoverflow.com/questions/17716192/insert-line-break-when-writing-to-file
          */
@@ -52,7 +55,7 @@ public class MainSopaLetras{
             System.out.println(name+" no es un nombre de archivo válido.");
         }
     }
-    //se usa otro metodo para organizar el arreglo de mayor a menor
+    // Se usa un método para organizar el arreglo de mayor a menor
     static void organizaLista(ArrayList<String> lista){
         int n = lista.size();
         for(int i = 0;i<n-1;i++){
@@ -69,7 +72,7 @@ public class MainSopaLetras{
     }
     static char[][] creaSopaDeLetras(ArrayList<String> lista, int tamanoSopa, Palabra[] p){
         /* Se crea un método para crear el trablero de la sopa de letras y se escoge la direccion que tendra cada palabra
-        *  de manera aleatorio y con un switch, en caso de que el numero aletario sea 0 la direccion será vertical e invertido
+        *  de manera aleatoria y con un switch, en caso de que el numero aletario sea 0 la direccion será vertical e invertido
         *  el 1 será vertical no invertido y asi sucesivamente.
         */
         Random myRand = new Random();
@@ -130,9 +133,7 @@ public class MainSopaLetras{
                     x = myRand.nextInt(tamanoSopa-lon);
                     y = myRand.nextInt(tamanoSopa);
                     j = x-1;
-                    /*
-                    * Es x-1, porque cuando vuelva al control del for, j++, entonces tendría uno más y no sería realmente 0.
-                    */
+                    // Es x-1, porque cuando vuelva al control del for, j++, entonces tendría uno más y no sería realmente 0.
                 }
             }
             for(int j=x;j<lon+x;j++){
@@ -148,10 +149,7 @@ public class MainSopaLetras{
                     x = lon + myRand.nextInt(tamanoSopa-lon);
                     y = myRand.nextInt(tamanoSopa);
                     j = x+1;
-                    /*
-                    * Es x+1, porque cuando vuelve al control del for, j--, entonces tendria uno menos y no
-                    seria realmente 0.
-                    */
+                    // Es x+1, porque cuando vuelve al control del for, j--, entonces tendria uno menos y no seria realmente 0.
                 }
             }
             for(int j=x;j>(x-lon);j--){
@@ -175,10 +173,7 @@ public class MainSopaLetras{
                     x = myRand.nextInt(tamanoSopa);
                     y = myRand.nextInt(tamanoSopa-lon);
                     j = y-1;
-                    /*
-                    * Es y-1, porque cuando vuelva al control del for, j++, entonces tendría uno más y no sería 
-                    * realmente 0.
-                    */
+                    // Es y-1, porque cuando vuelva al control del for, j++, entonces tendría uno más y no sería realmente 0.
                 }
             }
             for(int j=y;j<lon+y;j++){
@@ -194,9 +189,7 @@ public class MainSopaLetras{
                     x = myRand.nextInt(tamanoSopa);
                     y = lon + myRand.nextInt(tamanoSopa-lon);
                     j = y+1;
-                    /*
-                    * Es y+1, porque cuando vuelva al control del for, j--, entonces tendría uno menos y no sería realmente 0.
-                    */
+                    // Es y+1, porque cuando vuelva al control del for, j--, entonces tendría uno menos y no sería realmente 0.
                 }
             }
             for(int j = y;j>(y-lon);j--){
@@ -217,16 +210,17 @@ public class MainSopaLetras{
         Random myRand = new Random();
         int intentos = 0;
         switch(dir){
+            /*
+            * Se crea una variable intentos para verificar 3 veces si hay espacio para la palabra en cada dirección, de lo contrario se cambia de direccion, 
+            * para que no quede en un loop infinito buscando en las mismas cordenadas y encuentre en que direccion cabe la palabra.
+            */
             case 4:
                 int p = myRand.nextInt(tamanoSopa-lon);
                 for(int j = p;j<lon+p;j++){
                     if(sopa[j][j] != '\0' && sopa[j][j] != lista.get(i).charAt(j-p)){
                         p = myRand.nextInt(tamanoSopa-lon);
                         j = p-1;
-                        /*
-                         * Es p-1, porque cuando vuelva al control del for, j++, entonces tendría uno más y nosería 
-                         * realmente 0.
-                         */
+                        // Es p-1, porque cuando vuelva al control del for, j++, entonces tendría uno más y no sería realmente 0.
                         if(intentos<3){
                             intentos++;
                         }
@@ -235,9 +229,6 @@ public class MainSopaLetras{
                         }
                     }
                 }
-                /* se crea una variable intentos para verificar 3 veces si hay espacio para la palabra, de locontrario se cambia de direccion,
-                *  para que no quede en un loop infinito buscando en las mismas cordenadas.
-                */
                 for(int j = p;j<lon+p;j++){
                     sopa[j][j] = lista.get(i).charAt(j-p);
                 }
@@ -252,10 +243,7 @@ public class MainSopaLetras{
                         py = myRand.nextInt(tamanoSopa-lon);
                         j = px+1;
                         k = py-1;
-                        /*
-                         * Es p-1, porque cuando vuelva al control del for, j++, entonces tendría uno más ynosería 
-                         * realmente 0.
-                         */
+                        // Es px+1 y es py-1, porque cuando vuelva al control del for, j-- y k++, entonces tendría uno menos en x y uno más en y, y no sería realmente 0.
                         if(intentos<3){
                             intentos++;
                         }
@@ -276,9 +264,7 @@ public class MainSopaLetras{
                     if(sopa[j][j] != '\0' && sopa[j][j] != lista.get(i).charAt(p-j)){
                         p = lon + myRand.nextInt(tamanoSopa-lon);
                         j = p+1;
-                        /*
-                        * Es p+1, porque cuando vuelva al control del for, j--, entonces tendría uno menos y nosería realmente 0.
-                        */
+                        // Es p+1, porque cuando vuelva al control del for, j--, entonces tendría uno menos y no sería realmente 0.
                         if(intentos<3){
                             intentos++;
                         }
@@ -287,10 +273,6 @@ public class MainSopaLetras{
                         }
                     }
                 }
-                /* se crea una variable intentos para verificar 3 veces si hay espacio para la palabra, de lo 
-                *  contrario se cambia de direccion,
-                *  para que no quede en un loop infinito buscando en las mismas cordenadas.
-                */
                 for(int j = p;j>(p-lon);j--){
                     sopa[j][j] = lista.get(i).charAt(p-j);
                 }
@@ -305,10 +287,7 @@ public class MainSopaLetras{
                         px = myRand.nextInt(tamanoSopa-lon);
                         k = px-1;
                         j = py+1;
-                        /*
-                         * Es p-1, porque cuando vuelva al control del for, j++, entonces tendría uno más yno sería 
-                         * realmente 0.
-                         */
+                        // Es px-1 y es py+1, porque cuando vuelva al control del for, j-- y k++, entonces tendría uno mas en x y uno menos en y, y no sería realmente 0.
                         if(intentos<3){
                             intentos++;
                         }
@@ -317,9 +296,6 @@ public class MainSopaLetras{
                         }
                     }
                 }
-                /* se crea una variable intentos para verificar 3 veces si hay espacio para la palabra, de lo  contrario se cambia de direccion,
-                *  para que no quede en un loop infinito buscando en las mismas cordenadas.
-                */
                 for(int j = py, k = px;j>(py-lon);j--, k++){
                         sopa[j][k] = lista.get(i).charAt(k-px);
                 }
@@ -345,10 +321,10 @@ public class MainSopaLetras{
         }
     }
     private static void creaPalabra(ArrayList<String> lista, Palabra[] p, int dir, int i, int x, int y){
-        /* Se crea un método para crear un objeto palabra, que nos servira para imprimir las palabras 
-        *  que se colocaron en la sopa y para obtener sus diferentes atributos.
+        /* 
+        * Se crea un método para crear un objeto palabra, que nos servira para imprimir las palabras 
+        * que se colocaron en la sopa y para obtener sus diferentes atributos.
         */
         p[i] = new Palabra(lista.get(i), x, y, dir, false);
     }
-
 }

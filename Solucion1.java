@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.*; // se importan todas las libreria del paquete .io (input output).
 public class Solucion1 implements MetodosSolucion{
+    // implementa la interfaz para utilizar los métodos solucionSopa e imprimeSopa
     private Palabra[] palabras;
     private char[][] sopa;
     private static final int[] dx = {1, -1, 0, 0, 1, -1, 1, -1};
@@ -22,6 +23,7 @@ public class Solucion1 implements MetodosSolucion{
         this.sopa = sopa;
     }
     public ArrayList<String> lecturaArchivo(String path){
+        // Se crea un método para leer el archivo usando un try - catch
         ArrayList<String> lista = new ArrayList<>();
         try {
             File doc = new File(path+".txt");
@@ -37,6 +39,7 @@ public class Solucion1 implements MetodosSolucion{
         return lista;
     }
     public int[] solucionSopa(){
+        // Se crea el método de la interfaz.
         int[] pasos = {0};
         for(int p = 0;p<palabras.length;p++){
             boolean[][] visited = new boolean[sopa.length][sopa.length];
@@ -87,6 +90,7 @@ public class Solucion1 implements MetodosSolucion{
         }
     }
     public void imprimeSopa(){
+        // Se crea el método de la interfaz.
         for(int i = 0;i<sopa.length;i++){
             for(int j=0;j<sopa.length;j++){
                 System.out.print(sopa[i][j]+" ");
