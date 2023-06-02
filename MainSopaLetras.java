@@ -2,10 +2,19 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
 import java.io.*; // se importan todas las libreria del paquete .io (input output).
-import java.nio.file.Paths;
-public class MainSopaLetras {
-    // se crea un metodo para buscar el archivo .txt para llenar el arreglo
-    static void creaArrayPalabras(String path, ArrayList<String> lista){
+public class MainSopaLetras{
+    static int getMenu(){
+        Scanner myScan = new Scanner(System.in);
+        System.out.println("MENU");
+        System.out.println("1. Crear sopa de letras a partir de archivo .txt");
+        System.out.println("2. Resolver sopa de letras con datos creados en opción 1.");
+        System.out.println("3. Resolver sopa de letras con datos externos.");
+        System.out.print("Ingrese una opción: ");
+        int opc = myScan.nextInt();
+        return opc;
+    }
+    static void lecturaArchivo(String path, ArrayList<String> lista){
+        // se crea un metodo para buscar y leer el archivo .txt para llenar el ArrayList de palabras.
         //se usa un try - catch para evitar que salga un error tipo java exception como out of bounds
         try {
             File doc = new File(path+".txt");
@@ -15,6 +24,30 @@ public class MainSopaLetras {
             }
         } catch (Exception e) {
             System.out.println("No existe un archivo con nombre "+path+".");
+        }
+    }
+    static void guardaArchivo(char[][] sopa, int tamanoSopa){
+        /*
+         * Se crea método para guardar la sopa de letras en un txt.
+         * Se usó información de:
+         * https://www.geeksforgeeks.org/java-program-to-save-a-string-to-a-file/
+         * https://stackoverflow.com/questions/17716192/insert-line-break-when-writing-to-file
+         */
+        Scanner myScan = new Scanner(System.in);
+        System.out.println("¿Que nombre quiere poner?");
+        String name = myScan.nextLine();
+        try{
+            FileWriter crea = new FileWriter(name+".txt");
+            for(int i=0;i<tamanoSopa;i++){
+                for(int j=0;j<tamanoSopa;j++){
+                    crea.write(sopa[i][j]);
+                }
+                crea.write("\n");
+            }
+            crea.close();
+        }
+        catch(Exception e){
+            System.out.println(name+" no es un nombre de archivo válido.");
         }
     }
     //se usa otro metodo para organizar el arreglo de mayor a menor
@@ -77,6 +110,7 @@ public class MainSopaLetras {
                     break;
             }
         }
+        llenaVacios(sopa, tamanoSopa);
         return sopa;
     }
     static void creaVerticales(ArrayList<String> lista, char[][] sopa, int tamanoSopa, int lon, int dir, int i, Palabra[] p){
@@ -293,7 +327,7 @@ public class MainSopaLetras {
                 return false;
         }
     }
-    static void llenaVacios(char[][] sopa, int tamanoSopa){
+    private static void llenaVacios(char[][] sopa, int tamanoSopa){
         // Se crea un  método para llenar los espacios restantes luego de poner todas las palabras en la sopa de letras.
         Random genChar = new Random();
         for (int i = 0; i < tamanoSopa; i++){
@@ -308,34 +342,11 @@ public class MainSopaLetras {
             }
         }
     }
-    static void creaPalabra(ArrayList<String> lista, Palabra[] p, int dir, int i, int x, int y){
-        /* Se crea un método para crar un objeto palabra, que nos servira para imprimir las palabras 
+    private static void creaPalabra(ArrayList<String> lista, Palabra[] p, int dir, int i, int x, int y){
+        /* Se crea un método para crear un objeto palabra, que nos servira para imprimir las palabras 
         *  que se colocaron en la sopa y para obtener sus diferentes atributos.
         */
         p[i] = new Palabra(lista.get(i), x, y, dir, false);
     }
-    static void guardaSopa(char[][] sopa, int tamanoSopa){
-        /*
-         * Se crea método para guardar la sopa de letras en un txt.
-         * Se usó información de:
-         * https://www.geeksforgeeks.org/java-program-to-save-a-string-to-a-file/
-         * https://stackoverflow.com/questions/17716192/insert-line-break-when-writing-to-file
-         */
-        Scanner myScan = new Scanner(System.in);
-        System.out.println("¿Que nombre quiere poner?");
-        String name = myScan.nextLine();
-        try{
-            FileWriter crea = new FileWriter(name+".txt");
-            for(int i=0;i<tamanoSopa;i++){
-                for(int j=0;j<tamanoSopa;j++){
-                    crea.write(sopa[i][j]);
-                }
-                crea.write("\n");
-            }
-            crea.close();
-        }
-        catch(Exception e){
-            System.out.println(name+" no es un nombre de archivo válido.");
-        }
-    }
+
 }

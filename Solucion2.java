@@ -1,3 +1,4 @@
-public class Solucion2 implements Metodos{
+import java.util.ArrayList;
+public class Solucion2 implements MetodosSolucion{
     
 }
