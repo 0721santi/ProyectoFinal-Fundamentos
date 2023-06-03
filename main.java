@@ -50,7 +50,7 @@ public class main{
                     pasos = solve.solucionSopa();
                     solve.imprimeSopa();
                     solve.imprimePosiciones(p);
-                    System.out.println("La sopa se resolvió en: "+pasos[0]+" pasos."); 
+                    System.out.println("La sopa se resolvió en: "+pasos[0]+" pasos.\n"); 
                     break;
                 case 3:
                     System.out.print("Ingrese el nombre del archivo con la sopa de letras: ");
@@ -60,7 +60,7 @@ public class main{
                     Solucion2 soluciona = new Solucion2(pathSopa, pathLista);
                     soluciona.imprimeSopa();
                     pasos = soluciona.solucionSopa();
-                    System.out.println("La sopa se resolvió en: "+pasos[0]+" pasos.");
+                    System.out.println("La sopa se resolvió en: "+pasos[0]+" pasos.\n");
                     break;
                 case 4:
                     System.out.println("Gracias por utilizar el programa.");

@@ -59,7 +59,8 @@ public class Solucion2 implements MetodosSolucion{
     public int[] solucionSopa(){
         //Se describe el funcionamiento en el archivo de interfaz.
         int[] pasos = {0};
-        System.out.println(listaPalabras);
+        System.out.println("\nLista de palabras a encontrar:");
+        System.out.println(listaPalabras+"\n");
         for(String palabra : listaPalabras){
             boolean[][] visited = new boolean[sopa.length][sopa[0].length];
             boolean found = false;
