@@ -8,7 +8,8 @@ public class Solucion1 implements MetodosSolucion{
     private static final int[] dx = {1, -1, 0, 0, 1, -1, 1, -1};
     private static final int[] dy = {0, 0, 1, -1, -1, -1, 1, 1};
     /*
-     * dx, dy son arrays de enteros que contienen que valores se deben de operar para recorrer la matriz en la dirección deseada:
+     * dx, dy son arrays de enteros que contienen que valores se deben de operar para recorrer la matriz en la dirección 
+     * deseada:
      * Cuando el indice vale 0, representa los valores para recorrer la matriz horizontal-> izquierda a derecha
      * Cuando el indice vale 1, representa los valores para recorrer la matriz horizontal-> derecha a izquierda (invertida)
      * Cuando el indice vale 2, representa los valores para recorrer la matriz vertical-> arriba a abajo
@@ -22,24 +23,8 @@ public class Solucion1 implements MetodosSolucion{
         this.palabras = palabras;
         this.sopa = sopa;
     }
-    public ArrayList<String> lecturaArchivo(String path){
-        // Se crea un método para leer el archivo usando un try - catch
-        ArrayList<String> lista = new ArrayList<>();
-        try {
-            File doc = new File(path+".txt");
-            Scanner readDoc = new Scanner(doc);       
-            while(readDoc.hasNextLine()){
-                lista.add(readDoc.nextLine());
-            }
-        } catch (Exception e) {
-            System.out.println("No existe un archivo con nombre "+path+".");
-            System.out.println("Ejecute nuevamente el programa.");
-            System.exit(0);
-        }
-        return lista;
-    }
     public int[] solucionSopa(){
-        // Se crea el método de la interfaz.
+        //Se describe el funcionamiento en el archivo de interfaz.
         int[] pasos = {0};
         for(int p = 0;p<palabras.length;p++){
             boolean[][] visited = new boolean[sopa.length][sopa.length];
@@ -53,8 +38,10 @@ public class Solucion1 implements MetodosSolucion{
     }
     private static boolean searchMethod(char[][] sopa, Palabra[] palabra, int p, boolean[][] visited, int x, int y, int index, int[] pasos){
         /*
-        * Se crea un método para buscar las palabras en la sopa de letras, se usó la herramienta de chatGPT para realizar la busqueda de manera más eficiente,
-        * chatGPT luego de preguntarle por diferentes metodos para resolver una sopa de letras arrojo varias estrategias y finalmente la que mejor se acoplo a nuestro proyecto
+        * Se crea un método para buscar las palabras en la sopa de letras, 
+        * se usó la herramienta de chatGPT para realizar la busqueda de manera más eficiente,
+        * chatGPT luego de preguntarle por diferentes metodos para resolver una sopa de letras arrojo varias estrategias y finalmente la que 
+        * mejor se acoplo a nuestro proyecto
         * fue el DFS (búsqueda en profundidad) ya que era un codigo corto, fácil de comprender y eficiente.
         */
         if (index == palabra[p].getWordLongitude()-1){
@@ -83,14 +70,16 @@ public class Solucion1 implements MetodosSolucion{
     public void imprimePosiciones(Palabra[] p){
         System.out.println("Las respectivas posiciones son: ");
         /* 
-        * Se crea un método para encontrar las coordenadas dentro de la sopa de letras en las que se encuentran cada una de las palabras
+        * Este método imprime la información principal de una palabra: Su nombre, su posición inicial y final y, si fue encontrada o no.
         */
         for(int i=0;i<p.length;i++){
             System.out.println("Palabra: "+p[i].getName()+". -> X1, Y1: ("+p[i].getX1()+" "+p[i].getY1()+"), X2,Y2: ("+p[i].getX2()+" "+p[i].getY2()+").");
         }
     }
     public void imprimeSopa(){
-        // Se crea el método de la interfaz.
+        /*
+         * Este método imprime por pantalla el tablero de la sopa de letras.
+         */
         for(int i = 0;i<sopa.length;i++){
             for(int j=0;j<sopa.length;j++){
                 System.out.print(sopa[i][j]+" ");
