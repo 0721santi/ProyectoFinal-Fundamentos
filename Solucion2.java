@@ -89,7 +89,7 @@ public class Solucion2 implements MetodosSolucion{
         return pasos;
     }
 
-    private static boolean searchMethod(char[][] grid, String palabra, boolean[][] visited, int x, int y, int index, int[] usedX, int[] usedY, int[] pasos){
+    private static boolean searchMethod(char[][] sopa, String palabra, boolean[][] visited, int x, int y, int index, int[] usedX, int[] usedY, int[] pasos){
         /*
         * Se crea un método para buscar las palabras en la sopa de letras, se usó la herramienta de chatGPT para         
         * encontrar un método que, agregando las modificaciones requeridas para esta solución, pudiese brindar la       
@@ -102,7 +102,7 @@ public class Solucion2 implements MetodosSolucion{
             usedY[1] = y;
             return true;
         }
-        if(x < 0 || x >= grid.length || y < 0 || y >= grid[x].length || visited[x][y] || grid[x][y] != palabra.charAt(index)){
+        if(x < 0 || x >= sopa.length || y < 0 || y >= sopa[x].length || visited[x][y] || sopa[x][y] != palabra.charAt(index)){
             return false;
         }
         visited[x][y] = true;
@@ -110,8 +110,8 @@ public class Solucion2 implements MetodosSolucion{
             int newX = x + dx[i];
             int newY = y + dy[i];
             pasos[0]++;
-            if ((newX >= 0 && newX < grid.length) && (newY >= 0 && newY < grid.length) && grid[newX][newY] == palabra.charAt(index+1)){
-                if (searchMethod(grid, palabra, visited, x + dx[i], y + dy[i], index + 1, usedX, usedY, pasos)){
+            if ((newX >= 0 && newX < sopa.length) && (newY >= 0 && newY < sopa.length) && sopa[newX][newY] == palabra.charAt(index+1)){
+                if (searchMethod(sopa, palabra, visited, x + dx[i], y + dy[i], index + 1, usedX, usedY, pasos)){
                     return true;
                 }
             }

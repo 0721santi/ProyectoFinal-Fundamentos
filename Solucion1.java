@@ -1,6 +1,3 @@
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.io.*; // se importan todas las libreria del paquete .io (input output).
 public class Solucion1 implements MetodosSolucion{
     // implementa la interfaz para utilizar los métodos solucionSopa e imprimeSopa
     private Palabra[] palabras;
@@ -26,8 +23,10 @@ public class Solucion1 implements MetodosSolucion{
     public int[] solucionSopa(){
         //Se describe el funcionamiento en el archivo de interfaz.
         int[] pasos = {0};
+        System.out.println("\nLista de palabras a encontrar:");
         for(int p = 0;p<palabras.length;p++){
             boolean[][] visited = new boolean[sopa.length][sopa.length];
+            System.out.println(palabras[p].getName());
             for (int i = 0; i < sopa.length; i++) {
                 for (int j = 0; j < sopa.length; j++) {
                     searchMethod(sopa, palabras, p, visited, i, j, 0, pasos);

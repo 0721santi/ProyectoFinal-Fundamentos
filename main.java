@@ -34,7 +34,6 @@ public class main{
                     tamanoSopa = listaPalabras.get(0).length() * 2;
                     sopa = MainSopaLetras.creaSopaDeLetras(listaPalabras, tamanoSopa, p);
                     MainSopaLetras.guardaArchivo(sopa, tamanoSopa);
-                    System.out.println("La sopa de letras ha sido creada con éxito.\n");
                     check = true;
                     break;
                 case 2:

@@ -14,6 +14,7 @@ public class MainSopaLetras{
         System.out.println("1. Crear sopa de letras a partir de archivo .txt");
         System.out.println("2. Resolver sopa de letras con datos creados en opción 1.");
         System.out.println("3. Resolver sopa de letras con datos externos.");
+        System.out.println("4. Salir.");
         System.out.print("Ingrese una opción: ");
         int opc = myScan.nextInt();
         return opc;
@@ -44,7 +45,7 @@ public class MainSopaLetras{
          * https://stackoverflow.com/questions/17716192/insert-line-break-when-writing-to-file
          */
         Scanner myScan = new Scanner(System.in);
-        System.out.println("¿Que nombre quiere poner?");
+        System.out.println("¿Que nombre quiere poner a la sopa de letras? ");
         String name = myScan.nextLine();
         try{
             FileWriter crea = new FileWriter(name+".txt");
@@ -55,6 +56,7 @@ public class MainSopaLetras{
                 crea.write("\n");
             }
             crea.close();
+            System.out.println("La sopa de letras ha sido creada con éxito.\n");
         }
         catch(Exception e){
             System.out.println(name+" no es un nombre de archivo válido.");
